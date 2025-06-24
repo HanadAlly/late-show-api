@@ -5,9 +5,9 @@ from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<your_username>:<your_password>@localhost:5432/late_show_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://myuser:mypassword@localhost:5432/late_show_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY'] = 'your-secret-key'  
+app.config['JWT_SECRET_KEY'] = 'your-secure-secret-key'  # Replace with a secure key
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)

@@ -2,9 +2,10 @@ from server.config import db
 
 class Appearance(db.Model):
     __tablename__ = 'appearances'
-    
+    __table_args__ = {'extend_existing': True}  # Add this to prevent redefinition error
+
     id = db.Column(db.Integer, primary_key=True)
-    rating = db.Column(db.Integer, nullable=False)
+    _rating = db.Column(db.Integer, nullable=False)  # Store rating internally
     guest_id = db.Column(db.Integer, db.ForeignKey('guests.id'), nullable=False)
     episode_id = db.Column(db.Integer, db.ForeignKey('episodes.id'), nullable=False)
 
