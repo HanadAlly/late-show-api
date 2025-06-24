@@ -1,12 +1,9 @@
-from server.config import db
+from config import db
 
 class Guest(db.Model):
-    __tablename__ = 'guests'
-    __table_args__ = {'extend_existing': True}
-
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    occupation = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    occupation = db.Column(db.String, nullable=False)
     appearances = db.relationship('Appearance', backref='guest', lazy=True, cascade='all, delete-orphan')
 
     def to_dict(self):

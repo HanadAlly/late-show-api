@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
-from server.config import db
-from server.models.user import User
-from flask_jwt_extended import create_access_token, jwt_required
+from flask_jwt_extended import create_access_token
+from config import db
+from models.user import User
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -11,9 +11,8 @@ def register():
     username = data.get('username')
     password = data.get('password')
 
-    if not username or not password:
-        return jsonify({'error': 'Username and password are required'}), 400
-
+    if not (username and password):
+        return jsonify({'error': 'Missing username or password'}), 400
     if User.query.filter_by(username=username).first():
         return jsonify({'error': 'Username already exists'}), 400
 
@@ -21,8 +20,7 @@ def register():
     user.set_password(password)
     db.session.add(user)
     db.session.commit()
-
-    return jsonify(user.to_dict()), 201
+    return jsonify({'message': 'User registered'}), 201
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -35,4 +33,4 @@ def login():
         return jsonify({'error': 'Invalid credentials'}), 401
 
     access_token = create_access_token(identity=user.id)
-    return jsonify({'access_token': access_token}), 200
+    return jsonify({'access_token': access_token})
