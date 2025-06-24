@@ -6,3 +6,10 @@ Python 3.9+
 PostgreSQL
 Git
 Postman
+### Installation
+Clone the repository
+Install dependencies
+Set up PostgreSQL database
+Configure server/config.py
+Run migrations and seed data
+Start the application
